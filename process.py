@@ -12,3 +12,6 @@ class Process():
     def add_space(self, space):
         self.Spaces.append(space)
         self.countSpaces += 1
+    
+    def clear_space(self):
+        self.Spaces.clear()

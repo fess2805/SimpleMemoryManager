@@ -5,7 +5,7 @@ import random
 import time
 from process import Process
 
-memoryManager = VariablePartitionMemoryManager(64, 8)
+memoryManager = VariablePartitionMemoryManager(64, False)
 count_worked_process = 0
 count_working_process = 0
 

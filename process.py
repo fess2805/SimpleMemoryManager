@@ -5,7 +5,7 @@ class Process():
     def __init__(self, size):
         self.id = uuid.uuid4()
         self.size = size        
-        self.status = 0
+        self.status = 0 #0-idle 1-running 2-wait
         self.countSpaces = 0
         self.Spaces = []
     

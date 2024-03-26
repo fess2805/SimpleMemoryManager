@@ -4,17 +4,17 @@ from process import Process
 from interface import implements, Interface
 import threading
 
-class ConstantPartitionMemoryManager():
-    def __init__(self, size, sizeOfBlocs) -> None:
+class ConstantPartitionMemoryManager(implements (IMemoryManager)):
+    def __init__(self, size, sizeOfSpace, compress):
         self.Mutex = threading.Lock()
         self.Spaces = dict()
         self.totalSize = size
-        self.countPages = (int)(size / sizeOfBlocs)
+        self.countPages = (int)(size / sizeOfSpace)
         self.fillPages = 0
         self.filSizes = 0
         for i in range(self.countPages):
             space = Space(size)
-            self.Spaces[space.id] = space
+            self.Spaces[space.id] = space  
     
     def allocate_memory(self, process: Process):
         self.Mutex.acquire()             
@@ -29,7 +29,7 @@ class ConstantPartitionMemoryManager():
                 break  
         self.Mutex.release()
 
-    def release_memory(self, process):
+    def release_memory(self, process: Process):
         self.Mutex.acquire()
         for space in self.Spaces.values():
             if (space.process == process):

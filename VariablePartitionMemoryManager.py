@@ -5,8 +5,8 @@ from interface import implements, Interface
 import threading
 import random
 
-class VariablePartitionMemoryManager():
-    def __init__(self, size, compress) -> None:
+class VariablePartitionMemoryManager(implements (IMemoryManager)):
+    def __init__(self, size, sizeOfSpace, compress):
         self.Mutex = threading.Lock()
         self.Spaces = list()
         self.totalSize = size
@@ -16,13 +16,14 @@ class VariablePartitionMemoryManager():
         self.compress = compress
         cells = [2,4,6,8]   
         countSize = 0     
-        while countSize < size:
-            sizeOfSpace = cells[random.randint(0,3)]
-            if ((countSize + sizeOfSpace) <= size):
-                space = Space(sizeOfSpace)
-                self.Spaces.append(space)
-                self.countPages += 1     
-                countSize += sizeOfSpace
+        while countSize < size:            
+            for i in range(4):
+                sizeOfSpace = cells[i]
+                if ((countSize + sizeOfSpace) <= size):
+                    space = Space(sizeOfSpace)
+                    self.Spaces.append(space)
+                    self.countPages += 1     
+                    countSize += sizeOfSpace
         self.Spaces.sort(key=lambda item: item.size)   
     
     def compress_memory(self):
@@ -67,7 +68,7 @@ class VariablePartitionMemoryManager():
             self.compress_memory()
         self.Mutex.release()
 
-    def release_memory(self, process):
+    def release_memory(self, process: Process):
         self.Mutex.acquire()
         for space in self.Spaces:
             if (space.process == process):
@@ -78,6 +79,6 @@ class VariablePartitionMemoryManager():
         self.Mutex.release()
 
     def get_status(self):
-        return f"Менеджер памяти с постоянными разделами: Занято разделов: {self.fillPages} Занято памяти: {self.filSizes}"
+        return f"Менеджер памяти с переменными разделами: Занято разделов: {self.fillPages} Занято памяти: {self.filSizes}"
 
 

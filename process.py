@@ -15,3 +15,4 @@ class Process():
     
     def clear_space(self):
         self.Spaces.clear()
+        self.countSpaces = 0

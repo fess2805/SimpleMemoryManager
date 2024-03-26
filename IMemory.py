@@ -8,6 +8,8 @@ class IMemoryManager(Interface):
         pass
     def release_memory(self, process: Process):
         pass
+    def wakeup_process(self, process: Process):
+        pass
     def get_status(self):
         pass
     

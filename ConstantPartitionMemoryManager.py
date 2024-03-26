@@ -37,9 +37,13 @@ class ConstantPartitionMemoryManager(implements (IMemoryManager)):
                 self.fillPages -=1
                 self.filSizes -= process.size
                 break
-        self.Mutex.release()
+        process.clear_space()
+        self.Mutex.release()        
 
     def get_status(self):
         return f"Менеджер памяти с постоянными разделами: Занято разделов: {self.fillPages} Занято памяти: {self.filSizes}"
+    
+    def wakeup_process(self, process: Process):
+        return
 
 

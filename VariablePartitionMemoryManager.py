@@ -76,9 +76,12 @@ class VariablePartitionMemoryManager(implements (IMemoryManager)):
                 self.fillPages -=1
                 self.filSizes -= process.size
                 break
+        process.clear_space()
         self.Mutex.release()
 
     def get_status(self):
         return f"Менеджер памяти с переменными разделами: Занято разделов: {self.fillPages} Занято памяти: {self.filSizes}"
+    def wakeup_process(self, process: Process):
+        return
 
 

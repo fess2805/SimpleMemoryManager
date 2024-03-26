@@ -9,10 +9,12 @@ class Process():
         self.countSpaces = 0
         self.Spaces = []
     
-    def add_space(self, space):
+    def add_space(self, space: Space):
         self.Spaces.append(space)
         self.countSpaces += 1
     
     def clear_space(self):
         self.Spaces.clear()
         self.countSpaces = 0
+    
+    

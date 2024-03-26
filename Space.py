@@ -8,3 +8,4 @@ class Space:
         self.busySize = 0
         self.type = 0
         self.process = None
+        self.position = 0

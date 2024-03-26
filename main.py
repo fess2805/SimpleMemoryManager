@@ -18,7 +18,14 @@ def access_resource(timer, process):
     global memoryManager, count_worked_process, count_working_process   
     count_working_process +=1
     # выполняем обработку
-    time.sleep(timer)    
+    time.sleep(timer) 
+    #процесс уснул
+    process.status = 2   
+    time.sleep(timer / 2)
+    #процесс проснулся
+    process.status = 1
+    memoryManager.wakeup_process(process)
+    time.sleep(timer / 2)
     #print(f'{process.id} закончил выполнение. Выгружаем память...') 
     memoryManager.release_memory(process)
     #print(f'{process.id} освободил память.')
@@ -29,7 +36,7 @@ def main_thread(all_task):
     global memoryManager, count_working_process, count_worked_process, isTheEnd, count_second
     processes = list()     
     for i in range(all_task):
-        process = Process(random.randint(1,8))
+        process = Process(random.randint(2,6))
         processes.append(process)
         #print(f'{process.id} пробует получить память для загрузки')   
     #проверка менеджера памяти с постоянными разделами

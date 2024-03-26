@@ -12,7 +12,7 @@ class VariablePartitionMemoryManager(implements (IMemoryManager)):
         self.totalSize = size
         self.countPages = 0
         self.fillPages = 0
-        self.filSizes = 0
+        self.fillSizes = 0
         self.compress = compress
         cells = [2,4,6,8]   
         countSize = 0     
@@ -61,7 +61,7 @@ class VariablePartitionMemoryManager(implements (IMemoryManager)):
                 space.locked = True
                 space.busySize = process.size
                 self.fillPages +=1
-                self.filSizes += process.size
+                self.fillSizes += process.size
                 process.add_space(space)                 
                 break  
         if (findSpace == False and self.compress):
@@ -74,13 +74,13 @@ class VariablePartitionMemoryManager(implements (IMemoryManager)):
             if (space.process == process):
                 space.locked = False                
                 self.fillPages -=1
-                self.filSizes -= process.size
+                self.fillSizes -= process.size
                 break
         process.clear_space()
         self.Mutex.release()
 
     def get_status(self):
-        return f"Менеджер памяти с переменными разделами: Занято разделов: {self.fillPages} Занято памяти: {self.filSizes}"
+        return f"Менеджер памяти с переменными разделами: Занято разделов: {self.fillPages} Занято памяти: {self.fillSizes}"
     def wakeup_process(self, process: Process):
         return
 
